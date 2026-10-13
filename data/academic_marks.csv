@@ -1,0 +1,26 @@
+username,semester,subject,credits,marks
+alice,1,Mathematics I,4,86
+alice,1,Physics,4,78
+alice,1,Programming Fundamentals,3,91
+alice,1,Communication Skills,2,88
+alice,2,Mathematics II,4,82
+alice,2,Data Structures,4,89
+alice,2,Digital Logic,3,75
+alice,2,Environmental Studies,2,92
+bob,1,Mathematics I,4,62
+bob,1,Physics,4,55
+bob,1,Programming Fundamentals,3,71
+bob,1,Communication Skills,2,64
+bob,2,Mathematics II,4,58
+bob,2,Data Structures,4,66
+bob,2,Digital Logic,3,61
+bob,2,Environmental Studies,2,74
+Ayush,1,Mathematics I,4,90
+Ayush,1,Physics,4,84
+Ayush,1,Programming Fundamentals,3,93
+Ayush,1,Communication Skills,2,88
+Ayush,2,Mathematics II,4,92
+Ayush,2,Data Structures,4,95
+Ayush,2,Digital Logic,3,86
+Ayush,2,Environmental Studies,2,90
+Ayush,3,SE,4,90

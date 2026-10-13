@@ -1,0 +1,59 @@
+================================================================================
+SE_PROJECT — ACADEMIC TRACKING PORTAL — PROJECT INSTRUCTIONS
+================================================================================
+
+OVERVIEW
+--------
+Flask web application demonstrating a real-world academic portal experience:
+  • CSV-backed login (data/students_login.csv) with session-protected pages
+  • Semester-wise subject mark tracking from data/academic_marks.csv
+  • Backend reads the marks dataset on every request (instant updates without code changes)
+  • Automatic SGPA and CGPA calculation (credit-weighted)
+  • Performance comparison between semesters (SGPA delta)
+
+TECHNOLOGIES
+------------
+Python 3, Flask, Jinja2, vanilla JS, CSS
+
+FOLDER STRUCTURE
+----------------
+  backend/
+    app.py              Flask factory; SECRET_KEY
+    routes/             api.py, auth.py, pages.py
+    services/           auth_service.py (CSV login), academic.py (SGPA/CGPA), compute.py (legacy metrics)
+    utils/              helpers.py (paths, payload hash, safe redirect)
+    data/               runtime JSON (legacy demo)
+  data/
+    students_login.csv  Login dataset: id, username, password, attendance, marks
+    academic_marks.csv  Marks dataset: username, semester, subject, credits, marks
+  frontend/
+    templates/          login.html, index.html, result.html
+    static/css, static/js
+
+DEMO ACCOUNTS (plain-text passwords in CSV; compared with .strip())
+-------------------------------------------------------------------
+  alice   / alice123
+  bob     / bob123
+  carol   / carol123
+  dave    / dave123
+  erin    / erin123
+  frank   / frank123
+  grace   / grace123
+  henry   / henry123
+
+The portal login reads from data/students_login.csv.
+
+WORKFLOW
+--------
+1. Run: pip install -r requirements.txt && python run.py
+2. Open http://127.0.0.1:5000/ → redirect to /login
+3. Sign in with a demo account → home shows your record from the dataset
+4. Click “Open academic dashboard” → /result loads semester marks via GET /api/academic-summary
+5. Edit data/academic_marks.csv and refresh /result to see updates instantly
+
+API SUMMARY
+-----------
+  GET  /api/academic-summary Session required → semester-wise marks + SGPA/CGPA + comparisons
+  GET  /api/my-summary       (legacy) Session required → profile + metrics from CSV
+
+================================================================================

@@ -1,0 +1,17 @@
+# Render Blueprint: deploy backend as a Web Service
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: student-data-backend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT "backend.app:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+      - key: SECRET_KEY
+        generateValue: true
+    # Optional: restrict CORS to your frontend URL (e.g. GitHub Pages)
+    # envVars:
+    #   - key: CORS_ORIGIN
+    #     value: https://your-username.github.io

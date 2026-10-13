@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Tracking Portal · Academic Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="page page--home">
+  <canvas id="bg-particles" class="particles-canvas" aria-hidden="true"></canvas>
+  <div class="gradient-orb gradient-orb--1"></div>
+  <div class="gradient-orb gradient-orb--2"></div>
+
+  <div class="layout">
+    <header class="glass-header glass-header--split">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">SE</span>
+        <div>
+          <h1>Academic Tracking Portal</h1>
+          <p class="tagline">Academic tracking portal · Semester-wise marks · SGPA/CGPA</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        {% if session.user %}
+        <span class="user-pill" title="Signed-in user">{{ session.user }}</span>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary btn-header">Log out</a>
+        {% endif %}
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="glass-card security-banner">
+        <div>
+          <h2 class="security-banner__title">Academic Tracking Portal</h2>
+          <p class="security-banner__text">
+            Track semester-wise subject marks with automatic <strong>SGPA</strong> and <strong>CGPA</strong> calculation.
+          </p>
+        </div>
+      </section>
+
+      {% if student %}
+      <section class="glass-card dataset-card">
+        <h2 class="card-title">Your Academic Record</h2>
+        <p class="card-sub">Your profile details are shown after login and used to personalize your academic dashboard.</p>
+        <dl class="dataset-dl">
+          <div><dt>Student ID</dt><dd>{{ student.id }}</dd></div>
+          <div><dt>Username</dt><dd>{{ student.username }}</dd></div>
+          <div><dt>Attendance</dt><dd>{{ student.attendance }}%</dd></div>
+          <div><dt>Marks (CGPA scale)</dt><dd>{{ student.marks }}</dd></div>
+          <div><dt>Record performance label</dt><dd>{{ student.performance }}</dd></div>
+        </dl>
+        <div class="actions" style="margin-top: 1rem; padding-top: 0; border: none;">
+          <a href="{{ url_for('pages.result_page') }}" class="btn btn-glow">Open academic dashboard</a>
+        </div>
+      </section>
+      {% endif %}
+
+      <p class="footer-note">Tip: keep subjects and credits consistent per semester for accurate SGPA/CGPA.</p>
+    </main>
+
+    <footer class="footer glass-footer">
+      <p>Academic Tracking Portal · Dynamic academic dashboard</p>
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/config.js') }}"></script>
+</body>
+</html>

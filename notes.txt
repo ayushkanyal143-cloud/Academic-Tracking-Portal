@@ -1,0 +1,24 @@
+VIVA QUICK NOTES — SE_PROJECT Academic Tracking Portal
+======================================================
+
+1) What is this project?
+   A dynamic academic portal that reads marks from a dataset file and shows semester-wise progress with SGPA/CGPA.
+
+2) How does login work?
+   CSV-backed authentication (demo): username/password are stored in data/students_login.csv and matched after trimming.
+
+3) Where do SGPA/CGPA numbers come from?
+   /api/academic-summary loads data/academic_marks.csv on each request.
+   SGPA is computed per semester (credit-weighted grade points), and CGPA is computed across all semesters.
+
+4) How does “instant update” work?
+   The backend re-reads the marks dataset file for every request, so editing the CSV updates the dashboard without code changes.
+
+5) What is the semester comparison feature?
+   The portal compares consecutive semesters and shows the SGPA delta (improvement/decline).
+
+6) What is NOT production-ready?
+   Plain-text CSV passwords and minimal validation are for demonstration; a real portal would use hashed passwords + a database.
+
+7) Files to mention for structure?
+   backend/routes (HTTP), backend/services/academic.py (SGPA/CGPA logic), data/academic_marks.csv (marks source).

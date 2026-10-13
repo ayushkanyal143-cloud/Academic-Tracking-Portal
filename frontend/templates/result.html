@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Dashboard · Academic Tracking Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="page page--result page--clean">
+
+  <div id="page-loader" class="page-loader" aria-busy="true" aria-label="Loading dashboard">
+    <div class="page-loader__inner glass-card">
+      <div class="spinner spinner--large" aria-hidden="true"></div>
+      <p class="page-loader__text">Loading academic data…</p>
+      <p class="page-loader__sub">Preparing your latest academic summary · Calculating SGPA/CGPA</p>
+    </div>
+  </div>
+
+  <div class="layout layout--wide" id="result-layout" hidden>
+    <header class="glass-header glass-header--split">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">SE</span>
+        <div>
+          <h1>Academic dashboard</h1>
+          <p class="tagline">Semester-wise tracking · Auto SGPA/CGPA · Instant progress updates</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        {% if session.user %}
+        <span class="user-pill" title="Signed-in user">{{ session.user }}</span>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary btn-header">Log out</a>
+        {% endif %}
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="glass-card security-banner security-banner--compact">
+        <p class="security-banner__text">
+          <strong>Your academic dashboard.</strong> The latest marks and performance details are refreshed automatically.
+        </p>
+      </section>
+
+      <p class="error-msg error-msg--center" id="error-msg" role="alert" hidden></p>
+
+      <div class="dashboard-grid" id="dashboard">
+        <article class="glass-card dash-card dash-card--cgpa">
+          <h2 class="card-title">CGPA</h2>
+          <div class="ring-progress" id="cgpa-ring" data-value="0">
+            <svg viewBox="0 0 120 120" class="ring-progress__svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#22d3ee" />
+                  <stop offset="100%" stop-color="#3b82f6" />
+                </linearGradient>
+              </defs>
+              <circle class="ring-progress__track" cx="60" cy="60" r="52" fill="none" stroke-width="10" />
+              <circle class="ring-progress__fill" cx="60" cy="60" r="52" fill="none" stroke-width="10" stroke="url(#ringGrad)" stroke-linecap="round" transform="rotate(-90 60 60)" />
+            </svg>
+            <div class="ring-progress__label">
+              <span class="ring-progress__value" id="cgpa-value">—</span>
+              <span class="ring-progress__unit">/ 10</span>
+            </div>
+          </div>
+          <p class="dash-caption">Circular progress vs. max scale 10</p>
+        </article>
+
+        <article class="glass-card dash-card">
+          <h2 class="card-title">Latest SGPA</h2>
+          <p class="dash-metric" id="latest-sgpa-value">—</p>
+          <p class="dash-caption" id="latest-sgpa-caption">—</p>
+        </article>
+
+        <article class="glass-card dash-card">
+          <h2 class="card-title">Comparison</h2>
+          <p class="dash-metric" id="comparison-value">—</p>
+          <p class="dash-caption">SGPA change vs previous semester</p>
+        </article>
+
+        <article class="glass-card dash-card">
+          <h2 class="card-title">Predicted Next SGPA</h2>
+          <p class="dash-metric" id="predicted-sgpa-value">—</p>
+          <p class="dash-caption">Simple ML inference from previous semesters</p>
+        </article>
+
+        <article class="glass-card dash-card dash-card--wide">
+          <h2 class="card-title">Semester breakdown</h2>
+          <p class="dash-caption">Subject-wise marks are shown per semester, with computed SGPA.</p>
+          <div id="semesters-container" class="semesters"></div>
+        </article>
+      </div>
+
+      <div class="actions-row">
+        <a href="{{ url_for('pages.index') }}" class="btn btn-secondary">← Back</a>
+        <button type="button" class="btn btn-glow" id="recalculate-btn">Recalculate</button>
+      </div>
+    </main>
+
+    <footer class="footer glass-footer">
+      <p id="result-footer-hint">Loading…</p>
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/config.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/result.js') }}"></script>
+</body>
+</html>
